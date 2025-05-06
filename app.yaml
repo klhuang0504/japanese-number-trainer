@@ -1,0 +1,28 @@
+runtime: nodejs
+env: flex
+runtime_config:
+  operating_system: ubuntu22
+  runtime_version: 22
+
+handlers:
+  - url: /static
+    static_dir: build/static
+  - url: /(.*\.(json|ico|png|jpg|svg|css|js))$
+    static_files: build/\1
+    upload: build/.*\.(json|ico|png|jpg|svg|css|js)$
+  - url: /.*
+    static_files: build/index.html
+    upload: build/index.html
+
+manual_scaling:
+  instances: 1
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+skip_files:
+  - ^node_modules/
+  - ^src/
+  - ^public/
+  - ^(.*/)?\..*$
